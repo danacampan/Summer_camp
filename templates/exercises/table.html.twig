@@ -1,0 +1,19 @@
+<h1>Tabel exercitii</h1>
+<table border="1">
+    <style>
+    </style>
+    <tr>
+        <th>Id</th>
+        <th>Tip</th>
+        <th>Nume</th>
+        <th>Link Video</th>
+    </tr>
+    <tr>
+        {% for exercise in exercises %}
+        <td>{{ exercise.getId }}</td>
+        <td>{{ exercise.getTip.getName() }}</td>
+        <td>{{ exercise.getNume }}</td>
+        <td><a href={{ exercise.getLinkVideo }}>Link</a></td>
+    </tr>
+    {% endfor %}
+</table>
