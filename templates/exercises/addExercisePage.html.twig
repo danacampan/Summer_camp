@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Adaugă utilizatori{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('styles.css') }}">
+    <style>
+        :root {
+            --background-image-url: url('{{ asset('images/HomepageBackground.jpg') }}');
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+
+    <div class="form-container">
+        <h1>Adaugă exercitii</h1>
+        {{ form_start(form) }}
+        {{ form_row(form.nume) }}
+        {{ form_row(form.link_video) }}
+
+
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

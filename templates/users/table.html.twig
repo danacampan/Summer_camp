@@ -1,0 +1,19 @@
+<h1>Tabel users</h1>
+<table border="1">
+    <style>
+    </style>
+    <tr>
+        <th>Nume</th>
+        <th>Parola</th>
+        <th>Gen</th>
+        <th>Data nasterii</th>
+    </tr>
+    <tr>
+        {% for user in users %}
+        <td>{{ user.getName }}</td>
+        <td>{{ user.getParola }}</td>
+        <td>{{ user.getGender }}</td>
+        <td>{{ user.getBirthday|date('Y-m-d H:i:s') }}</td>
+    </tr>
+    {% endfor %}
+</table>

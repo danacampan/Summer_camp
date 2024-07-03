@@ -1,0 +1,102 @@
+body {
+    font-family: "Bruno Ace", sans-serif;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    position: relative;
+}
+
+.bruno-ace-regular {
+    font-family: "Bruno Ace", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+.form-container {
+    background-image: var(--background-image-url);
+    background-size: cover;
+    background-position: center;
+    height: 700px;
+    width: 1340px;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-container h1 {
+    text-align: center;
+    margin-bottom: 40px;
+    margin-top: 20px;
+}
+
+.form-container form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-container .form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-container label {
+    margin-bottom: 10px;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.form-container input,
+.form-container select,
+.form-container textarea {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    width: 100%;
+}
+
+.form-container .btn {
+    padding: 10px;
+    background-color: #007bff;
+    border: none;
+    color: white;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.form-container .btn:hover {
+    background-color: #0056b3;
+}
+.first-text {
+    position: absolute;
+    top: 30%;
+    left: 15%;
+    transform: translate(-50%, -50%);
+
+    color: white;
+    font-family: 'Bruno Ace', sans-serif;
+    font-size: 2em;
+}
+.second-text {
+      position: absolute;
+      top: 32.5%;
+      left: 15.8%;
+      transform: translate(-50%, -50%);
+      color: #8C8989;
+      font-family: 'Bruno Ace', sans-serif;
+      font-size: 2em;
+  }
+.third-text {
+    position: absolute;
+    top: 35%;
+    left: 14.5%;
+    transform: translate(-50%, -50%);
+
+    color: white;
+    font-family: 'Bruno Ace', sans-serif;
+    font-size: 2em;
+}
