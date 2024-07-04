@@ -11,6 +11,11 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 class User
 {
+
+    public const FEMININ = 1;
+    public const MASCULIN =2;
+    public const NONE=0;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -100,6 +105,28 @@ class User
         $this->gender = $gender;
 
         return $this;
+    }
+
+    public function getGenderAsString(): string
+    {
+        switch ($this->gender) {
+            case self::NONE:
+                return 'Prefer sa nu raspund';
+            case self::FEMININ:
+                return 'Feminin';
+            case self::MASCULIN:
+                return 'Masculin';
+            default:
+                return 'Unknown';
+        }
+    }
+    public static function getGenderChoices(): array
+    {
+        return [
+            'Masculin' => self::MASCULIN,
+            'Feminin' => self::FEMININ,
+            'Prefer sa nu raspund'=> self::NONE,
+        ];
     }
 
     /**

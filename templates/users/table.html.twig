@@ -1,19 +1,45 @@
-<h1>Tabel users</h1>
-<table border="1">
+{% extends 'base.html.twig' %}
+
+{% block title %}Utilizatori {%endblock%}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('styles.css') }}">
     <style>
+        :root {
+            --background-image-url: url('{{ asset('images/HomepageBackground.jpg') }}');
+        }
     </style>
-    <tr>
-        <th>Nume</th>
-        <th>Parola</th>
-        <th>Gen</th>
-        <th>Data nasterii</th>
-    </tr>
-    <tr>
-        {% for user in users %}
-        <td>{{ user.getName }}</td>
-        <td>{{ user.getParola }}</td>
-        <td>{{ user.getGender }}</td>
-        <td>{{ user.getBirthday|date('Y-m-d H:i:s') }}</td>
-    </tr>
-    {% endfor %}
-</table>
+{% endblock %}
+
+{% block body %}
+    <div class="container my-4">
+        <h1 class="mb-4 text-white">Utilizatori</h1>
+        <div class="row">
+            {% for user in users %}
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body bg-dark text-white">
+                            <div class="d-flex flex-row justify-content-between">
+                                <h5 class="card-title">{{ user.getName }}</h5>
+                                <a href="{{ path('edit_user', {'id': user.getId}) }}" class="btn btn-light ms-5">Editeaza</a>
+                            </div>
+                            <br>
+                            <h6 class="card-subtitle mb-2 text-muted">Gen: {{ user.getGenderAsString }}</h6>
+                            <div class="d-flex flex-column justify-content-between">
+                               <h6 class="card-subtitle mb-3 text-muted">Data nasterii: {{ user.getBirthday|date('Y-m-d')  }}</h6>
+
+                                <form action="{{ path('delete_user', {'id': user.getId}) }}" method="post" onsubmit="return confirm('Esti sigur ca vrei sa stergi acest utilizator?');" class="d-inline">
+                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.getId) }}">
+                                    <button class="btn btn-danger " type="submit">Sterge</button>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}

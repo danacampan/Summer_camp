@@ -1,8 +1,8 @@
 body {
     font-family: "Bruno Ace", sans-serif;
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
+    background-image: var(--background-image-url);
+    background-size: cover;
+    background-position: center;
     position: relative;
 }
 
@@ -11,6 +11,12 @@ body {
     font-weight: 400;
     font-style: normal;
 }
+
+.img-fluid {
+    width: 100%;
+    height: auto;
+}
+
 .form-container {
     background-image: var(--background-image-url);
     background-size: cover;
@@ -46,6 +52,8 @@ body {
     margin-bottom: 10px;
     font-weight: bold;
     margin-right: 10px;
+    display: flex;
+    justify-content: start;
 }
 
 .form-container input,
@@ -55,7 +63,7 @@ body {
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 16px;
-    width: 100%;
+    width: 300px;
 }
 
 .form-container .btn {
@@ -71,32 +79,74 @@ body {
 .form-container .btn:hover {
     background-color: #0056b3;
 }
-.first-text {
+.position-relative {
+    position: relative;
+}
+
+.first-text, .second-text, .third-text, .fourth-text {
     position: absolute;
-    top: 30%;
+    font-family: 'Bruno Ace', sans-serif;
+}
+
+.first-text {
+    top: 620px;
     left: 15%;
     transform: translate(-50%, -50%);
-
     color: white;
-    font-family: 'Bruno Ace', sans-serif;
     font-size: 2em;
+    line-height: 1.0;
 }
-.second-text {
-      position: absolute;
-      top: 32.5%;
-      left: 15.8%;
-      transform: translate(-50%, -50%);
-      color: #8C8989;
-      font-family: 'Bruno Ace', sans-serif;
-      font-size: 2em;
-  }
-.third-text {
-    position: absolute;
-    top: 35%;
-    left: 14.5%;
-    transform: translate(-50%, -50%);
 
-    color: white;
-    font-family: 'Bruno Ace', sans-serif;
-    font-size: 2em;
+.white-bar {
+
+    padding: 5px 5px 5px 5px;
+    background: #EAEAEA;
+}
+
+.second-white-bar {
+    background: #EAEAEA;
+}
+.content {
+    margin-left: -117px;
+    width: 616px;
+}
+
+.content-section {
+    padding: 50px 0;
+}
+.content-box {
+    padding-left: 100px;
+    padding-top: 150px;
+    background: #5E5E5E;
+    font-size: 26px;
+    width: 700px;
+    height: 712px;
+}
+.navbar-custom {
+    background-color: #EAEAEA;
+    border-radius: 40px;
+    margin: 20px auto;
+    padding: 8px 12px 8px 12px;
+    position: absolute;
+    top: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.navbar-custom .navbar-nav .nav-link {
+    color: black;
+    font-weight: bold;
+    margin-right: 15px;
+}
+.navbar-custom .navbar-brand {
+    color: black;
+    font-weight: bold;
+    font-size: 1.2em;
+}
+.hero-text {
+    position: absolute;
+    top: 25px;
+    left: 20px;
+    color: #EAEAEA;
+    font-size: 20px;
+
 }

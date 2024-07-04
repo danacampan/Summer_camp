@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Exercise;
 use App\Entity\Tip;
+use App\Entity\User;
 use App\Form\Type\ExerciseType;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
@@ -21,7 +22,7 @@ class ExercisesController extends AbstractController
         $this->doctrine = $doctrine;
     }
 
-    #[Route('/exercises')]
+    #[Route('/exercises', name: 'exercise_list')]
     public function exercisesTable(): Response
     {
         $exercises = $this->doctrine->getRepository(Exercise::class)->findAll();
@@ -38,23 +39,47 @@ class ExercisesController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            // $form->getData() holds the submitted values
-            // but, the original `$task` variable has also been updated
+
             $exercise = $form->getData();
-            $tip = new Tip();
-            $tip->setName('sjdadn');
-            $exercise->setTip($tip);
-            $entityManager->persist($tip);
             $entityManager->persist($exercise);
             $entityManager->flush();
 
-            // ... perform some action, such as saving the task to the database
-
         }
-
         return $this->render('exercises/addExercisePage.html.twig', [
             'form' => $form
         ]);
     }
 
+    #[Route('/exercises/edit/{id}',name: 'edit_exercise', methods: ['GET', 'PUT'])]
+    public function edit(Request $request, EntityManagerInterface $entityManager, Exercise $exercise)
+    {
+
+        $form = $this->createForm(ExerciseType::class, $exercise, [
+            'action' => $this->generateUrl('edit_exercise', ['id' => $exercise->getId()]),
+            'method' => 'PUT',
+        ]);
+
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $exercise = $form->getData();
+            $entityManager->persist($exercise);
+            $entityManager->flush();
+            return $this->render('exercises/editSuccess.html.twig');
+
+
+    }
+        return $this->render('exercises/editExercisePage.html.twig', ['form'=>$form]);
+}
+    #[Route('/exercise/delete/{id}',name: 'delete_exercise', methods: ['DELETE', 'POST'])]
+    public function delete(Request $request, EntityManagerInterface $entityManager, Exercise $exercise)
+    {
+        if ($this->isCsrfTokenValid('delete' . $exercise->getId(), $request->request->get('_token'))) {
+            $entityManager->remove($exercise);
+            $entityManager->flush();
+
+        }
+        return $this->redirectToRoute('exercise_list');
+    }
 }

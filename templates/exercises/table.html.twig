@@ -1,19 +1,46 @@
-<h1>Tabel exercitii</h1>
-<table border="1">
+{% extends 'base.html.twig' %}
+
+    {% block title %}Tabel exercitii{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('styles.css') }}">
     <style>
+        :root {
+            --background-image-url: url('{{ asset('images/HomepageBackground.jpg') }}');
+        }
     </style>
-    <tr>
-        <th>Id</th>
-        <th>Tip</th>
-        <th>Nume</th>
-        <th>Link Video</th>
-    </tr>
-    <tr>
+{% endblock %}
+
+{% block body %}
+<div class="container my-4">
+    <h1 class="mb-4 text-white">Exercitii </h1>
+    <div class="row">
         {% for exercise in exercises %}
-        <td>{{ exercise.getId }}</td>
-        <td>{{ exercise.getTip.getName() }}</td>
-        <td>{{ exercise.getNume }}</td>
-        <td><a href={{ exercise.getLinkVideo }}>Link</a></td>
-    </tr>
-    {% endfor %}
-</table>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-body bg-dark text-white">
+                        <div class="d-flex flex-row justify-content-between">
+                            <h5 class="card-title">{{ exercise.getNume }}</h5>
+                            <a href="{{ path('edit_exercise', {'id': exercise.getId}) }}" class="btn btn-light ms-5">Editeaza</a>
+                        </div>
+                        <h6 class="card-subtitle mb-2 text-muted">Tip: {{ exercise.getTip.getName() }}</h6>
+                        <div class="d-flex flex-column justify-content-between">
+                        {% if exercise.getLinkVideo != null %}
+                           <p><a href="{{ exercise.getLinkVideo }}" class="card-link text-white text-decoration-none">Vezi video</a></p>
+                        {% else %}
+                            <p>Nu exista link disponibil</p>
+                        {% endif %}
+                        <form action="{{ path('delete_exercise', {'id': exercise.getId}) }}" method="post" onsubmit="return confirm('Esti sigur ca vrei sa stergi acest exercitiu?');" class="d-inline">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ exercise.getId) }}">
+                            <button class="btn btn-danger " type="submit">Sterge</button>
+                        </form>
+                        </div>
+                        </div>
+
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

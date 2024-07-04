@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Editat cu succes{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('styles.css') }}">
+    <style>
+        :root {
+            --background-image-url: url('{{ asset('images/HomepageBackground.jpg') }}');
+        }
+    </style>
+{% endblock %}
+{% block body %}
+    <div class="form-container">
+        <h1>Utilizatorul a fost editat cu succes!</h1>
+        <a href=../homepage/homepage.html.twig><input type=button value='HOME'></a>
+    </div>
+{% endblock %}

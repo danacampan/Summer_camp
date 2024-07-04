@@ -21,7 +21,7 @@ class UsersController extends AbstractController
         $this->doctrine = $doctrine;
     }
 
-    #[Route('/users')]
+    #[Route('/users', name: 'users_list')]
     public function usersTable(): Response
     {
         $users = $this->doctrine->getRepository(User::class)->findAll();
@@ -59,4 +59,34 @@ class UsersController extends AbstractController
             'form' => $form
         ]);
     }
+
+    #[Route('/users/edit/{id}',name: 'edit_user', methods: ['GET', 'PUT'])]
+    public function edit(Request $request, EntityManagerInterface $entityManager, User $user)
+    {
+        $form = $this->createForm(UserType::class, $user, [
+            'action'=>$this->generateUrl('edit_user', ['id'=>$user->getId()]),
+            'method' => 'PUT',
+        ]);
+
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()){
+            $user = $form->getData();
+            $entityManager->persist($user);
+            $entityManager->flush();
+            return $this->render('users/editUserSuccess.html.twig', []);
+        }
+        return $this->render('users/editUserPage.html.twig', ['form'=>$form]);
+    }
+    #[Route('/users/delete/{id}',name: 'delete_user', methods: ['DELETE'])]
+    public function delete(Request $request, EntityManagerInterface $entityManager, User $user)
+    {
+        if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
+            $entityManager->remove($user);
+            $entityManager->flush();
+
+        }
+        return $this->redirectToRoute('users_list');
+    }
+
+
 }
