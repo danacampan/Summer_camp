@@ -1,0 +1,42 @@
+{% extends ['base.html.twig','homepage/navbar.html.twig'] %}
+
+
+    {% block title %}Tabel logs{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('styles.css') }}">
+    <style>
+        :root {
+            --background-image-url: url('{{ asset('images/HomepageBackground.jpg') }}');
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="container-fluid my-4">
+        <h1 class="mb-4 text-white">Logs </h1>
+        <a href="{{ path('create_log') }}" class="btn btn-light mb-5 ">Adaugă log</a>
+        <div class="d-flex flex-row">
+            {% for log in exercise_logs %}
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body bg-dark text-white">
+                            <div class="d-flex flex-row justify-content-between">
+                                <h5 class="card-title">{{ log.getWorkout.getName }}</h5>
+                                <a href="{{ path('edit_log', {'id': log.getId}) }}" class="btn btn-light ms-5">Editeaza</a>
+                            </div>
+                            <h6 class="card-subtitle mb-2 text-muted">Tip: {{ log.getExercise.getTip.getName}}</h6>
+                            <h6 class="card-subtitle mb-2 text-muted">Repetari: {{ log.getNrReps}}</h6>
+                            <h6 class="card-subtitle mb-2 text-muted">Durata: {{ log.getDurata|date(' m-s') }}</h6>
+                            <form action="{{ path('delete_log', {'id': log.getId}) }}" method="post" onsubmit="return confirm('Esti sigur ca vrei sa stergi acest log?');" class="d-inline">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ log.getId) }}">
+                                <button class="btn btn-danger " type="submit">Sterge</button>
+                            </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+{% endblock %}

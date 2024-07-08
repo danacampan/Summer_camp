@@ -13,13 +13,11 @@
 {% endblock %}
 
 {% block body %}
-
+    {% include 'homepage/navbar.html.twig' %}
     <div class="form-container">
-        <h1>Adaugă exercitii</h1>
+        <h1 class="mb-5 pt-5">Adaugă exercitii</h1>
         {{ form_start(form) }}
-        {{ form_errors(form) }}
         {{ form_row(form.nume) }}
-        {{ form_errors(form.nume) }}
         {{ form_row(form.link_video) }}
         {{ form_end(form) }}
     </div>

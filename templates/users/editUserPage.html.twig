@@ -18,14 +18,9 @@
         <h1>Editeaza utilizator</h1>
         {{ form_start(form) }}
         {{ form_row(form.name) }}
-        {{ form_errors(form.name) }}
         {{ form_row(form.parola) }}
-        {{ form_errors(form.parola) }}
         {{ form_row(form.gender) }}
-        {{ form_errors(form.gender) }}
         {{ form_row(form.birthday) }}
-        {{ form_errors(form.birthday) }}
-
         {{ form_end(form) }}
     </div>
 {% endblock %}

@@ -30,7 +30,7 @@ class ExercisesController extends AbstractController
             'exercises' => $exercises,
         ]);
     }
-    #[Route('/exercises/add', methods: array('GET', 'POST'))]
+    #[Route('/exercise', name:'create_exercise', methods: array('GET', 'POST'))]
     public function new(Request $request, EntityManagerInterface $entityManager)
     {
         $exercise = new Exercise();
@@ -41,6 +41,7 @@ class ExercisesController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             $exercise = $form->getData();
+
             $entityManager->persist($exercise);
             $entityManager->flush();
 
@@ -50,7 +51,7 @@ class ExercisesController extends AbstractController
         ]);
     }
 
-    #[Route('/exercises/edit/{id}',name: 'edit_exercise', methods: ['GET', 'PUT'])]
+    #[Route('/exercise/{id}',name: 'edit_exercise', methods: ['GET', 'PUT'])]
     public function edit(Request $request, EntityManagerInterface $entityManager, Exercise $exercise)
     {
 
@@ -58,7 +59,6 @@ class ExercisesController extends AbstractController
             'action' => $this->generateUrl('edit_exercise', ['id' => $exercise->getId()]),
             'method' => 'PUT',
         ]);
-
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -72,13 +72,12 @@ class ExercisesController extends AbstractController
     }
         return $this->render('exercises/editExercisePage.html.twig', ['form'=>$form]);
 }
-    #[Route('/exercise/delete/{id}',name: 'delete_exercise', methods: ['DELETE', 'POST'])]
+    #[Route('/exercise/{id}',name: 'delete_exercise', methods: ['DELETE', 'POST'])]
     public function delete(Request $request, EntityManagerInterface $entityManager, Exercise $exercise)
     {
         if ($this->isCsrfTokenValid('delete' . $exercise->getId(), $request->request->get('_token'))) {
             $entityManager->remove($exercise);
             $entityManager->flush();
-
         }
         return $this->redirectToRoute('exercise_list');
     }

@@ -16,6 +16,7 @@ class Exercise
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
     private ?string $nume = null;
 
     #[ORM\Column(length: 2048, nullable: true)]
@@ -23,6 +24,7 @@ class Exercise
 
     #[ORM\ManyToOne(inversedBy: 'exercises')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotBlank]
     private ?Tip $tip = null;
 
     /**

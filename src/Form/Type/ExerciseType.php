@@ -22,10 +22,7 @@ class ExerciseType extends AbstractType
                 'class' => 'App\Entity\Tip',
                 'choice_label' => 'Name',
             ), )
-            ->add('nume', TextType::class,['constraints' => [
-        new NotBlank(),
-        new Length(['min' => 3, 'max' => 255]),
-    ],])
+            ->add('nume', TextType::class)
             ->add('link_video', TextType::class)
             ->add('save', SubmitType::class);
     }

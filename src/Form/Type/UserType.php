@@ -19,31 +19,19 @@ class UserType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, ['label'=>'Nume',
-                'constraints' => [
-                    new NotBlank(),
-                    new Length(['min' => 3]),
-                ],])
+                ])
             ->add('parola', TextType::class, ['label'=>'Parola',
-                'constraints' => [
-                    new NotBlank(),
-                    new Length(['min' => 8]),
-                ],])
+                ])
             ->add('gender', ChoiceType::class, [
                 'choices' => [
                     'Feminin' => 1,
                     'Masculin' => 2,
                     'Prefer sa nu raspund' => 0,
                 ],
-                'constraints' => [
-                    new NotBlank(),
 
-                ],
             ])
             ->add('birthday', BirthdayType::class,['label'=>'Data nasterii',
-                'constraints' => [
-                    new NotBlank(),
-
-                ],])
+               ])
             ->add('save', SubmitType::class,['label'=>'Salveaza',]);
     }
     public function configureOptions(OptionsResolver $resolver): void

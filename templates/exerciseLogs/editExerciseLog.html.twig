@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Editat cu succes{% endblock %}
+{% block title %}Editeaza logs{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -11,9 +11,15 @@
         }
     </style>
 {% endblock %}
+
 {% block body %}
+    {% include 'homepage/navbar.html.twig' %}
+
     <div class="form-container">
-        <h1>Exercitiul a fost editat cu succes!</h1>
-        <a href="{{ path('edit_exercise', {'id': exercise.getId}) }}" class="btn btn-light ms-5">Editeaza</a>
+        <h1 class="mt-5 pt-5">Editeaza logs</h1>
+        {{ form_start(form) }}
+        {{ form_row(form.nr_reps) }}
+        {{ form_row(form.durata) }}
+        {{ form_end(form) }}
     </div>
 {% endblock %}

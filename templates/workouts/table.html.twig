@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Utilizatori {%endblock%}
+{% block title %}Antrenamente{%endblock%}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -13,30 +13,28 @@
 {% endblock %}
 
 {% block body %}
-    <div class="container-fluid my-4">
-        <h1 class="mb-4 text-white">Utilizatori</h1>
-        <a href="{{ path('create_user') }}" class="btn btn-light ms-5 mb-4">Adauga utilizator</a>
+    {% include 'homepage/navbar.html.twig' %}
+    <div class="container-md mb-5 ms-5">
+        <br><br><br><br>
+        <h2 class="mb-4 text-white">Antrenamente</h2>
+        <a href="{{ path('create_workout') }}" class="btn btn-light mb-4">Adaugă workout</a>
         <div class="row">
-            {% for user in users %}
+            {% for workout in workouts %}
                 <div class="col-md-4 mb-4">
                     <div class="card h-100">
                         <div class="card-body bg-dark text-white">
                             <div class="d-flex flex-row justify-content-between">
-                                <h5 class="card-title">{{ user.getName }}</h5>
-                                <a href="{{ path('edit_user', {'id': user.getId}) }}" class="btn btn-light ms-5">Editeaza</a>
+                                <h6 class="card-title">{{ workout.getName }}</h6>
+                                <a href="{{ path('edit_exercise', {'id': workout.getId}) }}" class="btn btn-light ms-5">Editeaza</a>
                             </div>
                             <br>
-                            <h6 class="card-subtitle mb-2 text-muted">Gen: {{ user.getGenderAsString }}</h6>
                             <div class="d-flex flex-column justify-content-between">
-                               <h6 class="card-subtitle mb-3 text-muted">Data nasterii: {{ user.getBirthday|date('Y-m-d')  }}</h6>
-
-                                <form action="{{ path('delete_user', {'id': user.getId}) }}" method="post" onsubmit="return confirm('Esti sigur ca vrei sa stergi acest utilizator?');" class="d-inline">
-                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.getId) }}">
+                                <form action="{{ path('delete_user', {'id': workout.getId}) }}" method="post" onsubmit="return confirm('Esti sigur ca vrei sa stergi acest antrenament?');" class="d-inline">
+                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ workout.getId) }}">
                                     <button class="btn btn-danger " type="submit">Sterge</button>
                                 </form>
                             </div>
                         </div>
-
                     </div>
                 </div>
             {% endfor %}

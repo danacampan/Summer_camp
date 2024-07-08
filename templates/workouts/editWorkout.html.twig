@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Editat cu succes{% endblock %}
+{% block title %}Editeaza antrenamente{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -11,9 +11,13 @@
         }
     </style>
 {% endblock %}
+
 {% block body %}
+
     <div class="form-container">
-        <h1>Exercitiul a fost editat cu succes!</h1>
-        <a href="{{ path('edit_exercise', {'id': exercise.getId}) }}" class="btn btn-light ms-5">Editeaza</a>
+        <h1>Editeaza antrenament</h1>
+        {{ form_start(form) }}
+        {{ form_row(form.name) }}
+        {{ form_end(form) }}
     </div>
 {% endblock %}

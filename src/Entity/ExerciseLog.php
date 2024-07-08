@@ -17,8 +17,6 @@ class ExerciseLog
     #[ORM\Column]
     private ?int $nr_reps = null;
 
-    #[ORM\Column(type: Types::TIME_MUTABLE)]
-    private ?\DateTimeInterface $durata = null;
 
     #[ORM\ManyToOne(inversedBy: 'exerciseLogs')]
     #[ORM\JoinColumn(nullable: false)]
@@ -27,6 +25,9 @@ class ExerciseLog
     #[ORM\ManyToOne(inversedBy: 'exerciseLogs')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Exercise $exercise = null;
+
+    #[ORM\Column(type: Types::TIME_MUTABLE)]
+    private ?\DateTimeInterface $durata = null;
 
     public function getId(): ?int
     {

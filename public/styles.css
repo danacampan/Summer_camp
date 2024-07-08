@@ -4,6 +4,7 @@ body {
     background-size: cover;
     background-position: center;
     position: relative;
+    padding-top: 70px;
 }
 
 .bruno-ace-regular {
@@ -98,13 +99,14 @@ body {
 }
 
 .white-bar {
-
     padding: 5px 5px 5px 5px;
     background: #EAEAEA;
+
 }
 
 .second-white-bar {
     background: #EAEAEA;
+
 }
 .content {
     margin-left: -117px;
@@ -149,4 +151,10 @@ body {
     color: #EAEAEA;
     font-size: 20px;
 
+}
+.footer {
+    text-align: center;
+    padding: 3px;
+    background-color: #EAEAEA;
+    color: black;
 }

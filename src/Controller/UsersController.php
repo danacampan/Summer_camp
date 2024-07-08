@@ -30,7 +30,7 @@ class UsersController extends AbstractController
         ]);
     }
 
-    #[Route('/users/add', methods: array('GET', 'POST'))]
+    #[Route('/user', name:'create_user',  methods: array('GET', 'POST'))]
     public function new(Request $request, EntityManagerInterface $entityManager)
     {
         $user = new User();
@@ -46,8 +46,6 @@ class UsersController extends AbstractController
             $user->setParola('dana');
             $user->setGender(0);
             $user->setBirthday(new \DateTime('now'));
-
-
             $entityManager->persist($user);
             $entityManager->flush();
 
@@ -60,7 +58,7 @@ class UsersController extends AbstractController
         ]);
     }
 
-    #[Route('/users/edit/{id}',name: 'edit_user', methods: ['GET', 'PUT'])]
+    #[Route('/user/{id}',name: 'edit_user', methods: ['GET', 'PUT'])]
     public function edit(Request $request, EntityManagerInterface $entityManager, User $user)
     {
         $form = $this->createForm(UserType::class, $user, [
@@ -77,7 +75,7 @@ class UsersController extends AbstractController
         }
         return $this->render('users/editUserPage.html.twig', ['form'=>$form]);
     }
-    #[Route('/users/delete/{id}',name: 'delete_user', methods: ['DELETE'])]
+    #[Route('/user/{id}',name: 'delete_user', methods: ['DELETE', 'POST'])]
     public function delete(Request $request, EntityManagerInterface $entityManager, User $user)
     {
         if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
