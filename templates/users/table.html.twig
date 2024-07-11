@@ -7,15 +7,20 @@
     <link rel="stylesheet" href="{{ asset('styles.css') }}">
     <style>
         :root {
-            --background-image-url: url('{{ asset('images/HomepageBackground.jpg') }}');
+            --background-image-url: url('{{ asset('images/HomePageBackground.jpg') }}');
         }
     </style>
 {% endblock %}
 
 {% block body %}
-    <div class="container-fluid my-4">
-        <h1 class="mb-4 text-white">Utilizatori</h1>
-        <a href="{{ path('create_user') }}" class="btn btn-light ms-5 mb-4">Adauga utilizator</a>
+    {% include 'homepage/navbar.html.twig' %}
+    <div class="hero-text">
+        <p><a href="{{ path('app_homepage_homepage') }}" class="text-decoration-none text-white">Smart<br> Workout</a></p>
+    </div>
+    <div class="container-fluid px-5">
+        <br><br><br>
+        <h1 class="mb-4 text-white mt-5">Utilizatori</h1>
+        <a href="{{ path('create_user') }}" class="btn btn-light mb-4">Adauga utilizator</a>
         <div class="row">
             {% for user in users %}
                 <div class="col-md-4 mb-4">
@@ -42,5 +47,6 @@
             {% endfor %}
         </div>
     </div>
-
+    <div class="second-white-bar">.</div>
+    {% include '/homepage/footer.html.twig' %}
 {% endblock %}

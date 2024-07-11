@@ -7,18 +7,28 @@
     <link rel="stylesheet" href="{{ asset('styles.css') }}">
     <style>
         :root {
-            --background-image-url: url('{{ asset('images/HomepageBackground.jpg') }}');
+            --background-image-url: url('{{ asset('images/HomePageBackground.jpg') }}');
         }
     </style>
 {% endblock %}
 
 {% block body %}
     {% include 'homepage/navbar.html.twig' %}
+    <div class="hero-text">
+        <p><a href="{{ path('app_homepage_homepage') }}" class="text-decoration-none text-white">Smart<br> Workout</a></p>
+    </div>
+    {% for flashMessage in app.flashes('success') %}
+        <div class="alert alert-success" role="alert">
+            {{ flashMessage }}
+        </div>
+    {% endfor %}
     <div class="form-container">
-        <h1 class="mb-5 pt-5">Adaugă exercitii</h1>
+        <h1 class="mt-5 pt-5">Adaugă exercitii</h1>
         {{ form_start(form) }}
         {{ form_row(form.nume) }}
         {{ form_row(form.link_video) }}
         {{ form_end(form) }}
     </div>
+    <div class="second-white-bar">.</div>
+    {% include '/homepage/footer.html.twig' %}
 {% endblock %}

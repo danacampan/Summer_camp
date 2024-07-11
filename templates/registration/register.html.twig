@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('styles.css') }}">
+    <style>
+        :root {
+            --background-image-url: url('{{ asset('images/HomePageBackground.jpg') }}');
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="hero-text">
+        <p><a href="{{ path('app_homepage_homepage') }}" class="text-decoration-none text-white">Smart<br> Workout</a></p>
+    </div>
+    <div class="form-container">
+        <h1 class="text-white">Inregistrare</h1>
+    {{ form_errors(registrationForm) }}
+
+    {{ form_start(registrationForm) }}
+        {{ form_row(registrationForm.name, {
+            label: 'Nume'
+        }) }}
+        {{ form_row(registrationForm.plainPassword, {
+            label: 'Parola'
+        }) }}
+        {{ form_row(registrationForm.birthday) }}
+        {{ form_row(registrationForm.gender) }}
+        <br>
+        {{ form_row(registrationForm.registerUser) }}
+        {{ form_row(registrationForm.registerAdmin) }}
+    {{ form_end(registrationForm) }}
+        <p class="mt-3 text-center">Ai deja un cont?<br><a href="{{ path('app_login') }}" class="text-white">Intră în cont</a></p>
+    </div>
+    </div>
+{% endblock %}

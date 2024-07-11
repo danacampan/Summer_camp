@@ -7,61 +7,56 @@
 {% endblock %}
 
 {% block body %}
-<nav class="navbar navbar-expand-lg navbar-custom">
-    <div class="collapse navbar-collapse justify-content-center">
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link" href="http://127.0.0.1:8000/">Acasă</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="http://127.0.0.1:8000/workouts">Antrenamente</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="http://127.0.0.1:8000/exercises">Exerciții</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Profil</a>
-            </li>
-        </ul>
-    </div>
-</nav>
-<div class="hero-text ">
-    <p>Smart<br> Workout</p>
+{% include 'homepage/navbar.html.twig' %}
+<div class="hero-text">
+    <p><a href="{{ path('app_homepage_homepage') }}" class="text-decoration-none text-white">Smart<br> Workout</a></p>
 </div>
     <img src="../{{ asset('images/Homepage.jpg')}}" alt="Homepage image" height="912" width="1348" />
     <div class="first-text d-flex flex-column align-items-start">
-    <p class=" bruno-ace-regular">E timpul să-ti </p>
+    <p class=" bruno-ace-regular">E timpul să-ți </p>
     <p class=" bruno-ace-regular mb-4">testezi limitele. </p>
-    <p class=" bruno-ace-regular">Incepe acum. </p>
+    <p class=" bruno-ace-regular">Începe acum. </p>
     </div>
 
     <div class="white-bar d-flex flex-row h-115 justify-content-around">
-        <img src="../{{ asset('images/Star.png')}}" class="mt-2" alt="Star" height="33" width="33" />
-        <p class="bruno-ace-regular me-3 fs-2 mt-1 fw-bold text-black">Alergare</p>
-        <img src="../{{ asset('images/Star.png')}}" class="mt-2" alt="Star" height="33" width="33" />
-        <p class="bruno-ace-regular me-3 fs-2 mt-1 fw-bold text-black">Inot</p>
-        <img src="../{{ asset('images/Star.png')}}" class="mt-2" alt="Star" height="33" width="33" />
-        <p class="bruno-ace-regular me-3 fs-2 mt-1 fw-bold text-black">Ciclism</p>
-        <img src="../{{ asset('images/Star.png')}}" class="mt-2" alt="Star" height="33" width="33" />
-        <p class="bruno-ace-regular me-3 fs-2 mt-1 fw-bold text-black">Yoga</p>
-        <img src="../{{ asset('images/Star.png')}}" class="mt-2" alt="Star" height="33" width="33" />
+        <img src="../{{ asset('images/Star.png')}}" class="mt-3" alt="Star" height="33" width="33" />
+        <p class="bruno-ace-regular me-3 fs-2 mt-2 fw-bold text-black">Alergare</p>
+        <img src="../{{ asset('images/Star.png')}}" class="mt-3" alt="Star" height="33" width="33" />
+        <p class="bruno-ace-regular me-3 fs-2 mt-2 fw-bold text-black">Înot</p>
+        <img src="../{{ asset('images/Star.png')}}" class="mt-3" alt="Star" height="33" width="33" />
+        <p class="bruno-ace-regular me-3 fs-2 mt-2 fw-bold text-black">Ciclism</p>
+        <img src="../{{ asset('images/Star.png')}}" class="mt-3" alt="Star" height="33" width="33" />
+        <p class="bruno-ace-regular me-3 fs-2 mt-2 fw-bold text-black">Yoga</p>
+        <img src="../{{ asset('images/Star.png')}}" class="mt-3" alt="Star" height="33" width="33" />
     </div>
     <div class=" container">
         <div class="d-flex flex-row">
             <div class="col-md-6 content">
                 <img src="../{{ asset('images/ContentPage.jpg')}}"  alt="Content page photo" height="712" width="617" />
             </div>
-            <div class="second-white-bar d-flex h-912 bg-secondary-subtle text-white">---</div>
+            <div class="second-white-bar d-flex h-912 bg-secondary-subtle ">---</div>
             <div class="col-md-6">
                 <div class="content-box flex-column">
                     <h2 class="text-white ms-4 fw-1">Antrenamente</h2>
                     <h2 class="text-black ms-4 fw-1 mb-3">personalizate</h2>
                     <p class="text-white ms-4">Crează-ți antrenamentul <br> și împărtășește-l cu lumea! <br> De la seturi, repetări și <br> timp de odihnă, ai control <br> complet asupra modului în <br> care vrei să-l programezi <br> și să-l prezinți.</p>
-                    <button class="btn btn-light ms-4">Începe</button>
+                    <a href="{{ is_granted('IS_AUTHENTICATED_FULLY') ? path('exercise_logs') : path('app_login') }}">
+                        <button class="btn btn-light ms-4">Începe</button>
+                    </a>
                 </div>
             </div>
         </div>
+        <div class="second-white-bar">.</div>
+        <div class="footer-home">
+            <div class="col-md-12 text-center">
+                <h5>Contact</h5>
+                <p>Email: contact@example.com</p>
+                <p>Telefon: +123 456 7890</p>
+            </div>
+            <div class="col-md-12 text-center">
+                <p>&copy; 2024 Numele Companiei. Toate drepturile rezervate.</p>
+            </div>
+        </div>
 
-
- {% endblock %}
+        {% endblock %}
 {% block javascripts %}{% endblock %}

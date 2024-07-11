@@ -4,15 +4,43 @@
             <li class="nav-item">
                 <a class="nav-link" href="http://127.0.0.1:8000/">Acasă</a>
             </li>
+            {% if is_granted('ROLE_ADMIN') %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('exercise_logs') }}">Antrenamente</a>
+                </li>
+            {% endif %}
+
             <li class="nav-item">
-                <a class="nav-link" href="http://127.0.0.1:8000/workouts">Antrenamente</a>
+                <a class="nav-link" href="{{ path('exercise_list') }}">Exerciții</a>
             </li>
+            {% if is_granted('ROLE_ADMIN') %}
             <li class="nav-item">
-                <a class="nav-link" href="http://127.0.0.1:8000/exercises">Exerciții</a>
+                <a class="nav-link" href="{{ path('users_list') }}">Utilizatori</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Profil</a>
-            </li>
+            {% endif %}
+
+            {% if app.user %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{ app.user.name }}
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        {% if is_granted('ROLE_USER') %}
+                        <a class="dropdown-item" href="{{ path('exercise_logs') }}">Antrenamentele mele</a>
+                        {% endif %}
+                        <a class="dropdown-item" href="{{ path('_logout_main') }}">Ieși din cont</a>
+                    </div>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('app_login') }}">Autentificare</a>
+                </li>
+            {% endif %}
         </ul>
     </div>
 </nav>
+{% block javascripts %}
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+{% endblock %}

@@ -44,6 +44,8 @@ class ExercisesController extends AbstractController
 
             $entityManager->persist($exercise);
             $entityManager->flush();
+            $this->addFlash('success', 'Exercițiul a fost creat cu succes!');
+            return $this->redirectToRoute('exercise_list');
 
         }
         return $this->render('exercises/addExercisePage.html.twig', [
@@ -66,7 +68,9 @@ class ExercisesController extends AbstractController
             $exercise = $form->getData();
             $entityManager->persist($exercise);
             $entityManager->flush();
-            return $this->render('exercises/editSuccess.html.twig');
+            #return $this->render('exercises/editSuccess.html.twig');
+            $this->addFlash('success', 'Exercițiul a fost editat cu succes!');
+            return $this->redirectToRoute('exercise_list');
 
 
     }

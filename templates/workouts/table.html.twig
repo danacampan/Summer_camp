@@ -7,29 +7,36 @@
     <link rel="stylesheet" href="{{ asset('styles.css') }}">
     <style>
         :root {
-            --background-image-url: url('{{ asset('images/HomepageBackground.jpg') }}');
+            --background-image-url: url('{{ asset('images/HomePageBackground.jpg') }}');
         }
     </style>
 {% endblock %}
 
 {% block body %}
     {% include 'homepage/navbar.html.twig' %}
-    <div class="container-md mb-5 ms-5">
-        <br><br><br><br>
-        <h2 class="mb-4 text-white">Antrenamente</h2>
-        <a href="{{ path('create_workout') }}" class="btn btn-light mb-4">Adaugă workout</a>
+    <div class="hero-text">
+        <p><a href="{{ path('app_homepage_homepage') }}" class="text-decoration-none text-white">Smart<br> Workout</a></p>
+    </div>
+    <div class="container ms-5 pt-5">
+        <br><br><br>
+        <h1 class="mb-4 text-white">Antrenamente</h1>
+        <a href="{{ path('create_workout') }}" class="btn btn-light mb-5">Adaugă workout</a>
+    </div>
+
+    <div class="container mb-5 ms-5 pt-5">
         <div class="row">
             {% for workout in workouts %}
                 <div class="col-md-4 mb-4">
                     <div class="card h-100">
                         <div class="card-body bg-dark text-white">
                             <div class="d-flex flex-row justify-content-between">
-                                <h6 class="card-title">{{ workout.getName }}</h6>
-                                <a href="{{ path('edit_exercise', {'id': workout.getId}) }}" class="btn btn-light ms-5">Editeaza</a>
+                                <h5 class="card-title">{{ workout.getName }}</h5>
+                                <a href="{{ path('edit_workout', {'id': workout.getId}) }}" class="btn btn-light ms-5">Editeaza</a>
                             </div>
                             <br>
                             <div class="d-flex flex-column justify-content-between">
-                                <form action="{{ path('delete_user', {'id': workout.getId}) }}" method="post" onsubmit="return confirm('Esti sigur ca vrei sa stergi acest antrenament?');" class="d-inline">
+                                <h6 class="text-muted">Utilizator: {{ workout.getUser.getName }}</h6>
+                                <form action="{{ path('delete_workout', {'id': workout.getId}) }}" method="post" onsubmit="return confirm('Esti sigur ca vrei sa stergi acest antrenament?');" class="d-inline">
                                     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ workout.getId) }}">
                                     <button class="btn btn-danger " type="submit">Sterge</button>
                                 </form>
@@ -40,5 +47,8 @@
             {% endfor %}
         </div>
     </div>
+
+    <div class="second-white-bar">.</div>
+    {% include '/homepage/footer.html.twig' %}
 
 {% endblock %}

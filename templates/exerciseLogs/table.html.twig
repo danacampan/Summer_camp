@@ -1,42 +1,101 @@
 {% extends ['base.html.twig','homepage/navbar.html.twig'] %}
 
-
-    {% block title %}Tabel logs{% endblock %}
+{% block title %}Profil{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
     <link rel="stylesheet" href="{{ asset('styles.css') }}">
     <style>
         :root {
-            --background-image-url: url('{{ asset('images/HomepageBackground.jpg') }}');
+            --background-image-url: url('{{ asset('images/HomePageBackground.jpg') }}');
         }
     </style>
 {% endblock %}
 
 {% block body %}
-    <div class="container-fluid my-4">
-        <h1 class="mb-4 text-white">Logs </h1>
-        <a href="{{ path('create_log') }}" class="btn btn-light mb-5 ">Adaugă log</a>
-        <div class="d-flex flex-row">
-            {% for log in exercise_logs %}
-                <div class="col-md-4 mb-4">
-                    <div class="card h-100">
-                        <div class="card-body bg-dark text-white">
-                            <div class="d-flex flex-row justify-content-between">
-                                <h5 class="card-title">{{ log.getWorkout.getName }}</h5>
-                                <a href="{{ path('edit_log', {'id': log.getId}) }}" class="btn btn-light ms-5">Editeaza</a>
+    {% include '/homepage/navbar.html.twig' %}
+    <div class="hero-text">
+        <p><a href="{{ path('app_homepage_homepage') }}" class="text-decoration-none text-white">Smart<br> Workout</a></p>
+    </div>
+
+    {% for flashMessage in app.flashes('success') %}
+        <div class="alert alert-success" role="alert">
+            {{ flashMessage }}
+        </div>
+    {% endfor %}
+
+    <div class="container-fluid px-5 pt-5 mb-5 ms-1 pb-5">
+        <br><br><br>
+        {% if is_granted('ROLE_ADMIN') %}
+        <h1 class="mb-4 text-white">Antrenamente adaugate</h1>
+        {% else %}
+        <h1 class="mb-4 text-white">Antrenamentele mele</h1>
+        {% endif %}
+        {% if workouts is empty %}
+            <p class="text-white">Nu există antrenamente încă.</p>
+            <a href="{{ path('create_workout') }}" class="btn btn-light mb-5">Adaugă antrenament</a>
+        {% else %}
+            <a href="{{ path('create_workout') }}" class="btn btn-light mt-2 mb-5 ">Adaugă workout</a>
+            <div id="accordion">
+                {% for workoutId, group in groupedLogs %}
+                    <div class="card mb-3">
+                        <div class="card-header bg-dark d-flex flex-row justify-content-between" id="heading-{{ workoutId }}">
+                            <div class="d-flex flex-column">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link btn-dark text-white" data-toggle="collapse" data-target="#collapse-{{ workoutId }}" aria-expanded="true" aria-controls="collapse-{{ workoutId }}">
+                                    {{ group.workout.getName }}
+                                </button>
+                            </h5>
+                            <h6 class=" ms-2 mt-2 text-muted">Utilizator: {{ group.workout.getUser.getName }}</h6>
                             </div>
-                            <h6 class="card-subtitle mb-2 text-muted">Tip: {{ log.getExercise.getTip.getName}}</h6>
-                            <h6 class="card-subtitle mb-2 text-muted">Repetari: {{ log.getNrReps}}</h6>
-                            <h6 class="card-subtitle mb-2 text-muted">Durata: {{ log.getDurata|date(' m-s') }}</h6>
-                            <form action="{{ path('delete_log', {'id': log.getId}) }}" method="post" onsubmit="return confirm('Esti sigur ca vrei sa stergi acest log?');" class="d-inline">
-                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ log.getId) }}">
+                            <div class="d-flex flex-row">
+                            <a href="{{ path('create_log') }}" class="btn btn-light mb-5">Adaugă exercițiu</a>
+                                <a href="{{ path('edit_workout', {'id': workoutId}) }}" class="btn btn-light ms-2 mb-5 me-2">Editează</a>
+                            <form action="{{ path('delete_workout', {'id': workoutId}) }}" method="post" onsubmit="return confirm('Esti sigur ca vrei sa stergi acest antrenament?');" class="d-inline">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ workoutId) }}">
                                 <button class="btn btn-danger " type="submit">Sterge</button>
                             </form>
                             </div>
                         </div>
+
+                        <div id="collapse-{{ workoutId }}" class="collapse" aria-labelledby="heading-{{ workoutId }}" data-parent="#accordion">
+                            <div class="card-body bg-secondary ">
+                                {% if group.logs is empty %}
+                                    <p>Nu există exerciții pentru acest antrenament încă.</p>
+                                {% else %}
+                                    {% for log in group.logs %}
+                                        <div class="d-flex flex-row justify-content-between">
+                                            <h5 class="card-title text-white pb-5 mb-5">{{ log.getExercise.getNume }}</h5>
+                                            {% if log.getExercise.getLinkVideo != null %}
+                                                <img style="height: 100px;" src="{{ log.getExercise.getLinkVideo }}"  alt="Exercise GIF">
+                                            {% else %}
+                                                <p>Nu exista video disponibil</p>
+                                            {% endif %}
+                                            <a href="{{ path('edit_log', {'id': log.getId}) }}" class="btn btn-light ms-5 mb-5">Editează</a>
+                                        </div>
+                                        <h6 class="card-subtitle mb-2 text-dark exercise-type">Tip: {{ log.getExercise.getTip.getName }}</h6>
+                                        <h6 class="card-subtitle mb-2 text-dark">Repetări: {{ log.getNrReps }}</h6>
+                                        <h6 class="card-subtitle mb-2 text-dark">Durată: {{ log.getDurata|date('m-s') }}</h6>
+                                        <form action="{{ path('delete_log', {'id': log.getId}) }}" method="post" onsubmit="return confirm('Ești sigur că vrei să ștergi acest exercițiu?');" class="d-inline">
+                                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ log.getId) }}">
+                                            <button class="btn btn-danger " type="submit">Șterge</button>
+                                        </form>
+                                        <br>
+                                        <p class="border-bottom text-secondary">.</p>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                        </div>
                     </div>
-                </div>
-            {% endfor %}
-        </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+    <div class="second-white-bar">.</div>
+    {% include 'homepage/footer.html.twig' %}
 {% endblock %}
+
+{% block javascripts %}
+
+{% endblock %}
+

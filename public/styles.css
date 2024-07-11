@@ -2,9 +2,8 @@ body {
     font-family: "Bruno Ace", sans-serif;
     background-image: var(--background-image-url);
     background-size: cover;
-    background-position: center;
+    background-position: top;
     position: relative;
-    padding-top: 70px;
 }
 
 .bruno-ace-regular {
@@ -22,7 +21,8 @@ body {
     background-image: var(--background-image-url);
     background-size: cover;
     background-position: center;
-    height: 700px;
+    min-height: 100vh;
+    height: 850px;
     width: 1340px;
     color: white;
     padding: 20px;
@@ -34,6 +34,15 @@ body {
     text-align: center;
     margin-bottom: 40px;
     margin-top: 20px;
+}
+.content-wrap {
+    flex: 1;
+}
+
+.page-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 .form-container form {
@@ -98,14 +107,15 @@ body {
     line-height: 1.0;
 }
 
-.white-bar {
-    padding: 5px 5px 5px 5px;
-    background: #EAEAEA;
+.grey-bar {
+    background: #8e8e8e;
+    color: #8e8e8e;
 
 }
 
 .second-white-bar {
     background: #EAEAEA;
+    color: #EAEAEA;
 
 }
 .content {
@@ -130,7 +140,6 @@ body {
     margin: 20px auto;
     padding: 8px 12px 8px 12px;
     position: absolute;
-    top: 8px;
     left: 50%;
     transform: translateX(-50%);
 }
@@ -146,15 +155,71 @@ body {
 }
 .hero-text {
     position: absolute;
-    top: 25px;
+    top: 20px;
     left: 20px;
     color: #EAEAEA;
-    font-size: 20px;
-
+    font-size: 18px;
 }
+
 .footer {
+    background-color: #222;
+    color: #fff;
+    padding: 40px 0;
+    width: 1340px;
+    position: relative;
+    z-index: 1
+}
+.footer-home {
+    background-color: #222;
+    color: #fff;
+    padding: 40px 0;
+    bottom: 0;
+    width: 1348px;
+    margin-left:-117px;
+}
+
+.footer h5 {
+    font-size: 18px;
+    margin-bottom: 20px;
+    color: #f8f9fa;
+}
+
+.footer p, .footer ul, .footer li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    color: #ccc;
+}
+
+.footer a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.footer .text-center {
     text-align: center;
-    padding: 3px;
+}
+.card-header {
+    position: relative;
+    z-index: 10;
+}
+
+.card-body {
+    position: relative;
+    z-index: 10;
+}
+.btn.btn-submit {
     background-color: #EAEAEA;
     color: black;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn.btn-submit:hover {
+    background-color: #0056b3;
+}
+.exercise-type {
+    margin-top: -93px;
 }

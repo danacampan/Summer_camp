@@ -7,10 +7,14 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-class User
+#[UniqueEntity(fields: ['name'], message: 'There is already an account with this name')]
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
 
     public const FEMININ = 1;
@@ -22,16 +26,12 @@ class User
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, unique: true)]
     #[Assert\NotBlank]
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank]
-    #[Assert\Length(min: 8)]
     private ?string $parola = null;
-
-
 
 
     /**
@@ -47,6 +47,9 @@ class User
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     #[Assert\LessThan('today')]
     private ?\DateTimeInterface $birthday = null;
+
+    #[ORM\Column(type: Types::JSON)]
+    private array $roles = [];
 
     public function __construct()
     {
@@ -76,6 +79,11 @@ class User
 
         return $this;
     }
+    public function getUserIdentifier(): string
+    {
+        return (string) $this->name;
+    }
+
 
     public function getParola(): ?string
     {
@@ -83,6 +91,16 @@ class User
     }
 
     public function setParola(string $parola): static
+    {
+        $this->parola = $parola;
+
+        return $this;
+    }
+    public function getPassword(): string
+    {
+        return $this->parola;
+    }
+    public function setPassword(string $parola): self
     {
         $this->parola = $parola;
 
@@ -163,5 +181,22 @@ class User
         }
 
         return $this;
+    }
+
+    public function getRoles(): array
+    {
+        return $this->roles;
+    }
+
+    public function setRoles(array $roles): static
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
+    public function eraseCredentials(): void
+    {
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
     }
 }

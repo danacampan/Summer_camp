@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="{{ asset('styles.css') }}">
     <style>
         :root {
-            --background-image-url: url('{{ asset('images/HomepageBackground.jpg') }}');
+            --background-image-url: url('{{ asset('images/HomePageBackground.jpg') }}');
         }
     </style>
 {% endblock %}
@@ -15,12 +15,17 @@
 {% block body %}
 
     {% include 'homepage/navbar.html.twig' %}
-
+    <div class="hero-text">
+        <p><a href="{{ path('app_homepage_homepage') }}" class="text-decoration-none text-white">Smart<br> Workout</a></p>
+    </div>
     <div class="form-container">
-        <h1 class="mt-5 pt-5">Adaugă logs</h1>
+        <h1 class="mt-5 pt-5">Adaugă exercițiu</h1>
+
         {{ form_start(form) }}
         {{ form_row(form.nr_reps) }}
         {{ form_row(form.durata) }}
         {{ form_end(form) }}
     </div>
+    <div class="grey-bar">.</div>
+    {% include '/homepage/footer.html.twig' %}
 {% endblock %}

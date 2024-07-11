@@ -10,6 +10,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 
 class UsersController extends AbstractController
@@ -31,7 +32,7 @@ class UsersController extends AbstractController
     }
 
     #[Route('/user', name:'create_user',  methods: array('GET', 'POST'))]
-    public function new(Request $request, EntityManagerInterface $entityManager)
+    public function new(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager)
     {
         $user = new User();
 
@@ -41,15 +42,16 @@ class UsersController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             // $form->getData() holds the submitted values
             // but, the original `$task` variable has also been updated
-            $user = $form->getData();
-            $user->setName('Dana');
-            $user->setParola('dana');
-            $user->setGender(0);
-            $user->setBirthday(new \DateTime('now'));
+            $user->setParola(
+                $userPasswordHasher->hashPassword(
+                    $user,
+                    $form->get('parola')->getData()
+                )
+            );
             $entityManager->persist($user);
             $entityManager->flush();
-
-            // ... perform some action, such as saving the task to the database
+            $this->addFlash('success', 'Utilizatorul a fost adaugat cu succes!');
+            return $this->redirectToRoute('users_list');
 
         }
 

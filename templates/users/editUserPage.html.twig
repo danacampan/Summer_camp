@@ -7,20 +7,26 @@
     <link rel="stylesheet" href="{{ asset('styles.css') }}">
     <style>
         :root {
-            --background-image-url: url('{{ asset('images/HomepageBackground.jpg') }}');
+            --background-image-url: url('{{ asset('images/HomePageBackground.jpg') }}');
         }
     </style>
 {% endblock %}
 
 {% block body %}
-
+    {% include 'homepage/navbar.html.twig' %}
+    <div class="hero-text">
+        <p><a href="{{ path('app_homepage_homepage') }}" class="text-decoration-none text-white">Smart<br> Workout</a></p>
+    </div>
     <div class="form-container">
-        <h1>Editeaza utilizator</h1>
+        <h1 class="mt-5 pt-5">Editeaza utilizator</h1>
         {{ form_start(form) }}
         {{ form_row(form.name) }}
         {{ form_row(form.parola) }}
         {{ form_row(form.gender) }}
         {{ form_row(form.birthday) }}
+        {{ form_row(form.roles) }}
         {{ form_end(form) }}
     </div>
+    <div class="second-white-bar">.</div>
+    {% include '/homepage/footer.html.twig' %}
 {% endblock %}

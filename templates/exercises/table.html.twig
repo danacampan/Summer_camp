@@ -1,47 +1,64 @@
-{% extends ['base.html.twig'] %}
+{% extends 'base.html.twig' %}
 
-
-    {% block title %}Tabel exercitii{% endblock %}
+{% block title %}Tabel exercitii{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
     <link rel="stylesheet" href="{{ asset('styles.css') }}">
     <style>
         :root {
-            --background-image-url: url('{{ asset('images/HomepageBackground.jpg') }}');
+            --background-image-url: url('{{ asset('images/HomePageBackground.jpg') }}');
         }
     </style>
 {% endblock %}
 
-        {% block body %}
-        {% include 'homepage/navbar.html.twig' %}
-        <div class="container-md mb-5 ms-5">
-            <br><br><br><br><br>
-            <h2 class="text-white mb-4">Tabel exercitii</h2>
-            <a href="{{ path('create_exercise') }}" class="btn btn-light ">Adaugă exercitiu</a>
-            <div class="row">
-                {% for exercise in exercises %}
-                    <div class="col-md-4 mt-5 mb-4">
-                        <div class="card h-100">
-                            <div class="card-body bg-dark text-white">
-                                <div class="d-flex flex-row justify-content-between">
-                                    <h5 class="card-title">{{ exercise.getNume }}</h5>
-                                    <a href="{{ path('edit_exercise', {'id': exercise.getId}) }}" class="btn btn-light ms-5">Editeaza</a>
-                                </div>
-                                <h6 class="card-subtitle mb-2 text-muted">Tip: {{ exercise.getTip.getName() }}</h6>
-                                <div class="d-flex flex-column justify-content-between">
-                                {% if exercise.getLinkVideo != null %}
-                                   <p><a href="{{ exercise.getLinkVideo }}" class="card-link text-white text-decoration-none">Vezi video</a></p>
-                                {% else %}
-                                    <p>Nu exista link disponibil</p>
-                                {% endif %}
-                                
-                                </div>
-                                </div>
+{% block body %}
+    {% include 'homepage/navbar.html.twig' %}
 
+    <div class="hero-text">
+        <p><a href="{{ path('app_homepage_homepage') }}" class="text-decoration-none text-white">Smart<br> Workout</a></p>
+    </div>
+    <div class="container mb-5 ms-5 pt-5">
+        <br><br><br>
+        <h1 class="text-white mb-4">Exerciții</h1>
+        {% if is_granted('ROLE_ADMIN') %}
+            <a href="{{ path('create_exercise') }}" class="btn btn-light">Adaugă exercitiu</a>
+        {% endif %}
+    </div>
+
+    <div class="container-md mb-5 ms-5">
+        <div class="row">
+            {% for exercise in exercises %}
+                <div class="col-md-4 mt-5 mb-1">
+                    <div class="card h-100">
+                        <div class="card-body bg-dark text-white">
+                            <div class="d-flex flex-row justify-content-between">
+                                <h5 class="card-title">{{ exercise.getNume }}</h5>
+                                {% if is_granted('ROLE_ADMIN') %}
+                                    <a href="{{ path('edit_exercise', {'id': exercise.getId}) }}" class="btn btn-light ms-5">Editeaza</a>
+                                {% endif %}
+                            </div>
+                            <h6 class="card-subtitle mb-2 text-muted">Tip: {{ exercise.getTip.getName() }}</h6>
+                            <div class="d-flex flex-column justify-content-between">
+                                {% if exercise.getLinkVideo != null %}
+                                    <img src="{{ exercise.getLinkVideo }}" class="w-50 h-50 mb-2" alt="Exercise GIF">
+                                {% else %}
+                                    <p>Nu exista gif disponibil</p>
+                                {% endif %}
+                                {% if is_granted('ROLE_ADMIN') %}
+                                    <form action="{{ path('delete_exercise', {'id': exercise.getId}) }}" method="post" onsubmit="return confirm('Esti sigur ca vrei sa stergi acest exercitiu?');" class="d-inline">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ exercise.getId) }}">
+                                        <button class="btn btn-danger" type="submit">Sterge</button>
+                                    </form>
+                                {% endif %}
+                            </div>
                         </div>
                     </div>
-                {% endfor %}
-            </div>
+                </div>
+            {% endfor %}
         </div>
-    {% endblock %}
+    </div>
+    <div class="second-white-bar">.</div>
+    {% include 'homepage/footer.html.twig' %}
+{% endblock %}
+
