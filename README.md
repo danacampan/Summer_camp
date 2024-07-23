@@ -1,6 +1,6 @@
 # Smart Workout
-## Smart Workout is a web platform designed to help users create personalized workout routines or receive customized plans from a personal trainer. 
-## I built the application during the Summer Camp organised by Netrom Software and I used Symfony for the backend and implemented a user-friendly frontend with HTML and BootStrap CSS. 
+Smart Workout is a web platform designed to help users create personalized workout routines or receive customized plans from a personal trainer. 
+I built the application during the Summer Camp organised by Netrom Software and I used Symfony for the backend and implemented a user-friendly frontend with HTML and BootStrap CSS. 
 
 
 
